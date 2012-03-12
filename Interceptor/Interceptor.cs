@@ -13,7 +13,9 @@ namespace Interceptor
     public class Interceptor
     {
         private IntPtr context;
-        private Thread callbackThread; 
+        private Thread callbackThread;
+
+        public event EventHandler<KeyPressedEventArgs> OnKeyPressed;
 
         public Interceptor()
         {
@@ -71,6 +73,12 @@ namespace Interceptor
 
             while (InterceptionDriver.Receive(context, device = InterceptionDriver.Wait(context), ref stroke, 1) > 0)
             {
+                // Emergency escape key
+                if (stroke.Key.Code == 0x45)
+                {
+                    break;
+                }
+
                 if (InterceptionDriver.IsMouse(device) > 0)
                 {
 
@@ -79,7 +87,12 @@ namespace Interceptor
 
                 if (InterceptionDriver.IsKeyboard(device) > 0)
                 {
-
+                    if (OnKeyPressed != null)
+                    {
+                        var args = new KeyPressedEventArgs() {Stroke = stroke};
+                        OnKeyPressed(this, args);
+                        stroke = args.Stroke;
+                    }
 
                     InterceptionDriver.Send(context, device, ref stroke, 1);
                 }
@@ -150,6 +163,7 @@ namespace Interceptor
 
                 InterceptionDriver.Send(context, 1, ref stroke, 1);
             }
+
         }
 
         public void SendClick(MouseState state)
@@ -172,5 +186,26 @@ namespace Interceptor
 
             InterceptionDriver.Send(context, 12, ref stroke, 1);
         }
+
+        public void MoveMouseBy(int deltaX, int deltaY)
+        {
+            Stroke stroke = new Stroke();
+            MouseStroke mouseStroke = new MouseStroke();
+
+            mouseStroke.X = deltaX;
+            mouseStroke.Y = deltaY;
+
+            stroke.Mouse = mouseStroke;
+            stroke.Mouse.Flags = (UInt16)MouseFlags.MoveRelative;
+
+            InterceptionDriver.Send(context, 12, ref stroke, 1);
+        }
+
+        public void MoveMouseTo(int x, int y)
+        {
+            MoveMouseBy(Int32.MinValue, Int32.MinValue);
+            MoveMouseBy(x, y);
+        }
     }
 }
+ 

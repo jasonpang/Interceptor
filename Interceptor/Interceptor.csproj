@@ -44,6 +44,7 @@
     <Compile Include="InterceptionDriver.cs" />
     <Compile Include="Interceptor.cs" />
     <Compile Include="KeyHelper.cs" />
+    <Compile Include="KeyPressedEventArgs.cs" />
     <Compile Include="MouseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
