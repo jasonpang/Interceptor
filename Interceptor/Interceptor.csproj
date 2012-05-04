@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InterceptionDriver.cs" />
-    <Compile Include="Interceptor.cs" />
-    <Compile Include="KeyHelper.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="KeyPressedEventArgs.cs" />
-    <Compile Include="MouseHelper.cs" />
+    <Compile Include="Keys.cs" />
+    <Compile Include="MousePressedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
