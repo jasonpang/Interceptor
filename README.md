@@ -21,6 +21,8 @@ How to use
 3. To load your driver, call (read the code comments below; you must set a filter mode to capture key press events or send key presses!):
 
 ```
+Input input = new Input();
+
 // Be sure to set your keyboard filter to be able to capture key presses and simulate key presses
 // KeyboardFilterMode.All captures all events; 'Down' only captures presses for non-special keys; 'Up' only captures releases for non-special keys; 'E0' and 'E1' capture presses/releases for special keys
 input.KeyboardFilterMode = KeyboardFilterMode.All;
@@ -54,6 +56,9 @@ input.SendText("!@#$%^&*()");
 input.SendText("[]\\;',./");
 input.SendText("{}|:\"<>?");
 
+
+// And finally
+input.Unload();
 ```
 
 Note:
