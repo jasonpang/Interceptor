@@ -16,9 +16,11 @@ How to use
 
 1. Download and build this project and reference its DLL in your project.
 
-2. Download and build this separate library written by the driver author. Put it in the same directory as your executable.
+2. Download 'interception.dll', a separate library written by the driver author. Put it in the same directory as your executable. This is required.
 
-3. To load your driver, call (read the code comments below; you must set a filter mode to capture key press events or send key presses!):
+3. Download and install 'install-interception.exe' from the author's webpage. Restart your computer after installation.
+
+4. In your code, to load your driver, call (read the code comments below; you must set a filter mode to capture key press events or send key presses!):
 
 ```
 Input input = new Input();
@@ -32,7 +34,7 @@ input.KeyboardFilterMode = KeyboardFilterMode.All;
 input.Load();
 ```
 
-4. Do your stuff.
+5. Do your stuff.
 
 ```
 input.MoveMouseTo(5, 5);
@@ -61,7 +63,7 @@ input.SendText("{}|:\"<>?");
 input.Unload();
 ```
 
-Note:
+Notes:
 
 1. You may get a ```BadImageFormatException``` if you don't use the proper architecture (x86 or x64) for all your projects in the solution, including this project. So you may have to download the source of this project to rebuild it to the right architecture. This should be easy and the build process should have no errors.
 
