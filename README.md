@@ -36,7 +36,7 @@ input.Load();
 
 ```
 input.MoveMouseTo(5, 5);
-input.MoveeMouseBy(25, 25);
+input.MoveMouseBy(25, 25);
 input.SendLeftClick();
 
 input.KeyDelay = 1; // See below for explanation; not necessary in non-game apps
