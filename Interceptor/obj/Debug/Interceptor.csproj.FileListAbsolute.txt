@@ -3,3 +3,8 @@ C:\Users\Jason\Documents\Programming\Projects\C#\Enterprise\Interceptor\Intercep
 C:\Users\Jason\Documents\Programming\Projects\C#\Enterprise\Interceptor\Interceptor\bin\Debug\Interceptor.pdb
 C:\Users\Jason\Documents\Programming\Projects\C#\Enterprise\Interceptor\Interceptor\obj\Debug\Interceptor.dll
 C:\Users\Jason\Documents\Programming\Projects\C#\Enterprise\Interceptor\Interceptor\obj\Debug\Interceptor.pdb
+D:\Code\Interceptor\Interceptor\obj\Debug\Interceptor.csprojResolveAssemblyReference.cache
+D:\Code\Interceptor\Interceptor\obj\Debug\Interceptor.dll
+D:\Code\Interceptor\Interceptor\bin\Debug\Interceptor.dll
+D:\Code\Interceptor\Interceptor\bin\Debug\Interceptor.pdb
+D:\Code\Interceptor\Interceptor\obj\Debug\Interceptor.pdb
