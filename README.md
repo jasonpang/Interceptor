@@ -37,8 +37,8 @@ input.Load();
 5. Do your stuff.
 
 ```
-input.MoveMouseTo(5, 5);
-input.MoveMouseBy(25, 25);
+input.MoveMouseTo(5, 5);  // Please note this doesn't use the driver to move the mouse; it uses System.Windows.Forms.Cursor.Position
+input.MoveMouseBy(25, 25); //  Same as above ^
 input.SendLeftClick();
 
 input.KeyDelay = 1; // See below for explanation; not necessary in non-game apps
@@ -68,3 +68,13 @@ Notes:
 1. You may get a ```BadImageFormatException``` if you don't use the proper architecture (x86 or x64) for all your projects in the solution, including this project. So you may have to download the source of this project to rebuild it to the right architecture. This should be easy and the build process should have no errors.
 
 2. You MUST download the 'interception.dll' available from http://oblita.com/Interception.
+
+3. If you've done all the above (installed the Interception driver correctly, put interception.dll in your project folder) and you're still not able to send keystrokes:
+ 
+The driver has a limitation in that it can't send keystrokes without receiving at least one keystroke. This is because the driver doesn't know which device id the keyboard is, so it has to wait to receive a keystroke to deduce the device id from your keystroke.
+
+In summary, before sending a keystroke, always physically press the keyboard once. Tap any key. Then you can send keystrokes. This doesn't apply to receiving keystrokes, because by receiving a keystroke, you have of course already pressed a key.
+
+4. MoveMouseTo() and MoveMouseBy() completely ignore the keyboard driver. It uses System.Windows.Forms.Position to set and get the cursor's position (which calls the standard Win32 API underneath for those respective functions).
+
+The reason for this is, while exploring the keyboard driver's mouse moving capabilities, I noticed it didn't move the cursor by pixel units, but rather it seemed to move the cursor by acceleration. This would continually produce inconsistent values when I wanted to move the cursor to a certain location. Because the Win32 cursor setting API isn't usually blocked by games and the like, I find simply calling these standard APIs to be sufficient without resorting to the driver. Please note that this only applies for setting cursor position. Intercepting the cursor still works okay. You can, for example, invert the x and y axes of the mouse using Interceptor.
