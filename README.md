@@ -1,6 +1,8 @@
 Interceptor
 ===========
 
+Note: Windows 8/8.1 is not supported.
+
 Interceptor is a wrapper for a Windows keyboard driver (Wrapping http://oblita.com/Interception). 
 
 Using the driver, Interceptor can simulate keystrokes and mouse clicks in...
