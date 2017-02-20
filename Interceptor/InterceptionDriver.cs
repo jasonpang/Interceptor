@@ -95,7 +95,7 @@ namespace Interceptor
         public Int16 Rolling;
         public Int32 X;
         public Int32 Y;
-        public UInt16 Information;
+        public UInt32 Information;
     }  
 
     [StructLayout(LayoutKind.Sequential)]
@@ -132,10 +132,10 @@ namespace Interceptor
         public static extern void SetPrecedence(IntPtr context, Int32 device, Int32 Precedence);
 
         [DllImport("interception.dll", EntryPoint = "interception_get_filter", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetFilter(IntPtr context, Int32 device);
+        public static extern ushort GetFilter(IntPtr context, Int32 device);
 
         [DllImport("interception.dll", EntryPoint = "interception_set_filter", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetFilter(IntPtr context, Predicate predicate, Int32 keyboardFilterMode);
+        public static extern void SetFilter(IntPtr context, Predicate predicate, ushort keyboardFilterMode);
 
         [DllImport("interception.dll", EntryPoint = "interception_wait", CallingConvention = CallingConvention.Cdecl)]
         public static extern Int32 Wait(IntPtr context);
@@ -156,9 +156,19 @@ namespace Interceptor
         public static extern Int32 IsInvalid(Int32 device);
 
         [DllImport("interception.dll", EntryPoint = "interception_is_keyboard", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 IsKeyboard(Int32 device);
+        private static extern Int32 _IsKeyboard(Int32 device);
+
+        public static Int32 IsKeyboard(Int32 device)
+        {
+            return _IsKeyboard(device);
+        }
 
         [DllImport("interception.dll", EntryPoint = "interception_is_mouse", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 IsMouse(Int32 device);
+        private static extern Int32 _IsMouse(Int32 device);
+
+        public static Int32 IsMouse(Int32 device)
+        {
+            return _IsMouse(device);
+        }
     }
 }
