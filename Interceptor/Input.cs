@@ -99,8 +99,8 @@ namespace Interceptor
 
         private void DriverCallback()
         {
-            InterceptionDriver.SetFilter(context, InterceptionDriver.IsKeyboard, (Int32) KeyboardFilterMode);
-            InterceptionDriver.SetFilter(context, InterceptionDriver.IsMouse, (Int32) MouseFilterMode);
+            InterceptionDriver.SetFilter(context, InterceptionDriver.IsKeyboard, (ushort) KeyboardFilterMode);
+            InterceptionDriver.SetFilter(context, InterceptionDriver.IsMouse, (ushort) MouseFilterMode);
 
             Stroke stroke = new Stroke();
 
@@ -128,7 +128,7 @@ namespace Interceptor
                 {
                     if (OnKeyPressed != null)
                     {
-                        var args = new KeyPressedEventArgs() { Key = stroke.Key.Code, State = stroke.Key.State};
+                        var args = new KeyPressedEventArgs() { Key = stroke.Key.Code, State = stroke.Key.State };
                         OnKeyPressed(this, args);
 
                         if (args.Handled)
