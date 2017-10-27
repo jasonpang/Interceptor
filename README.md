@@ -69,7 +69,7 @@ Notes:
 
 1. You may get a ```BadImageFormatException``` if you don't use the proper architecture (x86 or x64) for all your projects in the solution, including this project. So you may have to download the source of this project to rebuild it to the right architecture. This should be easy and the build process should have no errors.
 
-2. You MUST download the 'interception.dll' available from http://oblita.com/Interception.
+2. You MUST download the 'interception.dll' available on http://oblita.com/Interception.
 
 3. If you've done all the above (installed the Interception driver correctly, put interception.dll in your project folder) and you're still not able to send keystrokes:
  
