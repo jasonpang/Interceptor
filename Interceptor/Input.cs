@@ -75,7 +75,8 @@ namespace Interceptor
                 _callbackThread?.Join();
                 _callbackThread = new Thread(DriverCallback)
                 {
-                    Priority = ThreadPriority.Highest, IsBackground = true
+                    Priority = ThreadPriority.Highest,
+                    IsBackground = true
                 };
                 _callbackThread.Start();
 
@@ -104,8 +105,8 @@ namespace Interceptor
 
         private void DriverCallback()
         {
-            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsKeyboard, (ushort) KeyboardFilterMode);
-            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsMouse, (ushort) MouseFilterMode);
+            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsKeyboard, (ushort)KeyboardFilterMode);
+            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsMouse, (ushort)MouseFilterMode);
 
             var stroke = new Stroke();
 
@@ -117,7 +118,9 @@ namespace Interceptor
                     {
                         var args = new MousePressedEventArgs
                         {
-                            X = stroke.Mouse.X, Y = stroke.Mouse.Y, State = stroke.Mouse.State,
+                            X = stroke.Mouse.X,
+                            Y = stroke.Mouse.Y,
+                            State = stroke.Mouse.State,
                             Rolling = stroke.Mouse.Rolling
                         };
                         OnMousePressed(this, args);
@@ -132,7 +135,7 @@ namespace Interceptor
                 if (InterceptionDriver.IsKeyboard(_deviceId) > 0)
                     if (OnKeyPressed != null)
                     {
-                        var args = new KeyPressedEventArgs {Key = stroke.Key.Code, State = stroke.Key.State};
+                        var args = new KeyPressedEventArgs { Key = stroke.Key.Code, State = stroke.Key.State };
                         OnKeyPressed(this, args);
 
                         if (args.Handled) continue;
@@ -154,7 +157,8 @@ namespace Interceptor
             var stroke = new Stroke();
             var keyStroke = new KeyStroke
             {
-                Code = key, State = state
+                Code = key,
+                State = state
             };
 
 
@@ -353,7 +357,7 @@ namespace Interceptor
         public void SendMouseEvent(MouseState state)
         {
             var stroke = new Stroke();
-            var mouseStroke = new MouseStroke {State = state};
+            var mouseStroke = new MouseStroke { State = state };
 
 
             if (state == MouseState.ScrollUp)
@@ -404,7 +408,8 @@ namespace Interceptor
                 var stroke = new Stroke();
                 var mouseStroke = new MouseStroke
                 {
-                    X = deltaX, Y = deltaY
+                    X = deltaX,
+                    Y = deltaY
                 };
 
                 stroke.Mouse = mouseStroke;
@@ -431,7 +436,7 @@ namespace Interceptor
             if (useDriver)
             {
                 var stroke = new Stroke();
-                var mouseStroke = new MouseStroke {X = x, Y = y};
+                var mouseStroke = new MouseStroke { X = x, Y = y };
 
 
                 stroke.Mouse = mouseStroke;

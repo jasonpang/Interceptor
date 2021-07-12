@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Interceptor
 {
@@ -53,7 +50,7 @@ namespace Interceptor
         ScrollDown = 0x400,
         ScrollHorizontal = 0x800,
         ScrollLeft = 0x800,
-        ScrollRight = 0x800,
+        ScrollRight = 0x800
     }
 
     [Flags]
@@ -73,7 +70,7 @@ namespace Interceptor
         RightExtraUp = 0x200,
         MouseWheelVertical = 0x400,
         MouseWheelHorizontal = 0x800,
-        MouseMove = 0x1000,
+        MouseMove = 0x1000
     }
 
     [Flags]
@@ -92,18 +89,18 @@ namespace Interceptor
     {
         public MouseState State;
         public MouseFlags Flags;
-        public Int16 Rolling;
-        public Int32 X;
-        public Int32 Y;
-        public UInt32 Information;
-    }  
+        public short Rolling;
+        public int X;
+        public int Y;
+        public uint Information;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct KeyStroke
     {
         public Keys Code;
         public KeyState State;
-        public UInt32 Information;
+        public uint Information;
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -115,58 +112,71 @@ namespace Interceptor
     }
 
     /// <summary>
-    /// The .NET wrapper class around the C++ library interception.dll.
+    ///     The .NET wrapper class around the C++ library interception.dll.
     /// </summary>
     public static class InterceptionDriver
     {
-        [DllImport("interception.dll", EntryPoint = "interception_create_context", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("interception.dll", EntryPoint = "interception_create_context",
+            CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateContext();
 
-        [DllImport("interception.dll", EntryPoint = "interception_destroy_context", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("interception.dll", EntryPoint = "interception_destroy_context",
+            CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroyContext(IntPtr context);
 
-        [DllImport("interception.dll", EntryPoint = "interception_get_precedence", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetPrecedence(IntPtr context, Int32 device);
+        [DllImport("interception.dll", EntryPoint = "interception_get_precedence",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern void GetPrecedence(IntPtr context, int device);
 
-        [DllImport("interception.dll", EntryPoint = "interception_set_precedence", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetPrecedence(IntPtr context, Int32 device, Int32 Precedence);
+        [DllImport("interception.dll", EntryPoint = "interception_set_precedence",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetPrecedence(IntPtr context, int device, int precedence);
 
-        [DllImport("interception.dll", EntryPoint = "interception_get_filter", CallingConvention = CallingConvention.Cdecl)]
-        public static extern ushort GetFilter(IntPtr context, Int32 device);
+        [DllImport("interception.dll", EntryPoint = "interception_get_filter",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern ushort GetFilter(IntPtr context, int device);
 
-        [DllImport("interception.dll", EntryPoint = "interception_set_filter", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("interception.dll", EntryPoint = "interception_set_filter",
+            CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetFilter(IntPtr context, Predicate predicate, ushort keyboardFilterMode);
 
         [DllImport("interception.dll", EntryPoint = "interception_wait", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 Wait(IntPtr context);
+        public static extern int Wait(IntPtr context);
 
-        [DllImport("interception.dll", EntryPoint = "interception_wait_with_timeout", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 WaitWithTimeout(IntPtr context, UInt64 milliseconds);
+        [DllImport("interception.dll", EntryPoint = "interception_wait_with_timeout",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int WaitWithTimeout(IntPtr context, long milliseconds);
 
         [DllImport("interception.dll", EntryPoint = "interception_send", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 Send(IntPtr context, Int32 device, ref Stroke stroke, UInt32 numStrokes);
+        public static extern int Send(IntPtr context, int device, ref Stroke stroke, uint numStrokes);
 
-        [DllImport("interception.dll", EntryPoint = "interception_receive", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 Receive(IntPtr context, Int32 device, ref Stroke stroke, UInt32 numStrokes);
+        [DllImport("interception.dll", EntryPoint = "interception_receive",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int Receive(IntPtr context, int device, ref Stroke stroke, uint numStrokes);
 
-        [DllImport("interception.dll", EntryPoint = "interception_get_hardware_id", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 GetHardwareId(IntPtr context, Int32 device, String hardwareIdentifier, UInt32 sizeOfString);
+        [DllImport("interception.dll", EntryPoint = "interception_get_hardware_id",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetHardwareId(IntPtr context, int device, string hardwareIdentifier,
+            uint sizeOfString);
 
-        [DllImport("interception.dll", EntryPoint = "interception_is_invalid", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 IsInvalid(Int32 device);
+        [DllImport("interception.dll", EntryPoint = "interception_is_invalid",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int IsInvalid(int device);
 
-        [DllImport("interception.dll", EntryPoint = "interception_is_keyboard", CallingConvention = CallingConvention.Cdecl)]
-        private static extern Int32 _IsKeyboard(Int32 device);
+        [DllImport("interception.dll", EntryPoint = "interception_is_keyboard",
+            CallingConvention = CallingConvention.Cdecl)]
+        private static extern int _IsKeyboard(int device);
 
-        public static Int32 IsKeyboard(Int32 device)
+        public static int IsKeyboard(int device)
         {
             return _IsKeyboard(device);
         }
 
-        [DllImport("interception.dll", EntryPoint = "interception_is_mouse", CallingConvention = CallingConvention.Cdecl)]
-        private static extern Int32 _IsMouse(Int32 device);
+        [DllImport("interception.dll", EntryPoint = "interception_is_mouse",
+            CallingConvention = CallingConvention.Cdecl)]
+        private static extern int _IsMouse(int device);
 
-        public static Int32 IsMouse(Int32 device)
+        public static int IsMouse(int device)
         {
             return _IsMouse(device);
         }
