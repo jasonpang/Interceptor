@@ -12,6 +12,7 @@ namespace Interceptor
     {
         private IntPtr _context;
         private Thread _callbackThread;
+        private int _mouseId; // Default to 11 based on #10
 
         /// <summary>
         ///     Determines whether the driver traps no keyboard events, all events, or a range of events in-between (down only, up
@@ -114,6 +115,8 @@ namespace Interceptor
                    0)
             {
                 if (InterceptionDriver.IsMouse(_deviceId) > 0)
+                {
+                    _mouseId = _deviceId;
                     if (OnMousePressed != null)
                     {
                         var args = new MousePressedEventArgs
@@ -131,6 +134,7 @@ namespace Interceptor
                         stroke.Mouse.State = args.State;
                         stroke.Mouse.Rolling = args.Rolling;
                     }
+                }
 
                 if (InterceptionDriver.IsKeyboard(_deviceId) > 0)
                     if (OnKeyPressed != null)
@@ -366,7 +370,7 @@ namespace Interceptor
 
             stroke.Mouse = mouseStroke;
 
-            InterceptionDriver.Send(_context, 12, ref stroke, 1);
+            InterceptionDriver.Send(_context, _mouseId, ref stroke, 1);
         }
 
         public void SendLeftClick()
