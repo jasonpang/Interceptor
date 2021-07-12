@@ -91,9 +91,8 @@ namespace Interceptor
 
             if (context != IntPtr.Zero)
             {
-                callbackThread.Abort();
-                InterceptionDriver.DestroyContext(context);
                 IsLoaded = false;
+                InterceptionDriver.DestroyContext(context);
             }
         }
 
@@ -143,6 +142,8 @@ namespace Interceptor
                 InterceptionDriver.Send(context, deviceId, ref stroke, 1);
             }
 
+            if (!IsLoaded)
+                return;
             Unload();
             throw new Exception("Interception.Receive() failed for an unknown reason. The driver has been unloaded.");
         }
