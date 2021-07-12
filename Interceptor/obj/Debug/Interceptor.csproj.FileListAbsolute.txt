@@ -8,3 +8,9 @@ D:\Code\Interceptor\Interceptor\obj\Debug\Interceptor.dll
 D:\Code\Interceptor\Interceptor\bin\Debug\Interceptor.dll
 D:\Code\Interceptor\Interceptor\bin\Debug\Interceptor.pdb
 D:\Code\Interceptor\Interceptor\obj\Debug\Interceptor.pdb
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\bin\Debug\Interceptor.dll
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\bin\Debug\Interceptor.pdb
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\obj\Debug\Interceptor.csproj.AssemblyReference.cache
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\obj\Debug\Interceptor.csproj.CoreCompileInputs.cache
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\obj\Debug\Interceptor.dll
+C:\Users\Kevinf100\Source\Repos\Interceptor_Updated\Interceptor\obj\Debug\Interceptor.pdb
