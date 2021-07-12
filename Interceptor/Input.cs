@@ -65,6 +65,7 @@ namespace Interceptor
 
             if (context != IntPtr.Zero)
             {
+                callbackThread?.Join();
                 callbackThread = new Thread(new ThreadStart(DriverCallback));
                 callbackThread.Priority = ThreadPriority.Highest;
                 callbackThread.IsBackground = true;
