@@ -1,7 +1,9 @@
 ﻿using System;
+// ReSharper disable once RedundantUsingDirective
 using System.Drawing;
 using System.Linq;
 using System.Threading;
+// ReSharper disable once RedundantUsingDirective
 using System.Windows.Forms;
 
 // ReSharper disable UnusedMember.Global
@@ -12,7 +14,7 @@ namespace Interceptor
     {
         private IntPtr _context;
         private Thread _callbackThread;
-        private int _mouseId; // Default to 11 based on #10
+        private int _mouseId = 11; // Default to 11 based on #10
 
         /// <summary>
         ///     Determines whether the driver traps no keyboard events, all events, or a range of events in-between (down only, up
@@ -405,7 +407,7 @@ namespace Interceptor
         ///     vectors. An alternate version uses the standard Win32 API to get the current cursor's position, calculates the
         ///     desired destination's offset, and uses the Win32 API to set the cursor to the new position.
         /// </summary>
-        public void MoveMouseBy(int deltaX, int deltaY, bool useDriver = false)
+        public void MoveMouseBy(int deltaX, int deltaY, bool useDriver = true)
         {
             if (useDriver)
             {
@@ -421,6 +423,8 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, 12, ref stroke, 1);
             }
+            //Uncomment if you're using Windows Form. 
+            /*
             else
             {
                 var currentPos = Cursor.Position;
@@ -429,13 +433,14 @@ namespace Interceptor
                         currentPos.Y -
                         deltaY); // Coordinate system for y: 0 begins at top, and bottom of screen has the largest number
             }
+            */
         }
 
         /// <summary>
         ///     Warning: This function, if using the driver, does not function reliably and often moves the mouse in unpredictable
         ///     vectors. An alternate version uses the standard Win32 API to set the cursor's position and does not use the driver.
         /// </summary>
-        public void MoveMouseTo(int x, int y, bool useDriver = false)
+        public void MoveMouseTo(int x, int y, bool useDriver = true)
         {
             if (useDriver)
             {
@@ -448,10 +453,13 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, 12, ref stroke, 1);
             }
-
-            {
-                Cursor.Position = new Point(x, y);
-            }
+            //Uncomment if you're using Windows Form. 
+            /*
+                        else
+                        {
+                            Cursor.Position = new Point(x, y);
+                        }
+            */
         }
     }
 }
