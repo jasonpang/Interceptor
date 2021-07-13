@@ -51,6 +51,23 @@ namespace Interceptor
 
         private int _deviceId; /* Very important; which device the driver sends events to */
 
+        /// <summary>
+        ///     This function calls the Thread.Join() function for the thread currently dealing
+        ///     with the driver.
+        /// </summary>
+        public void DriverThreadJoin()
+        {
+            _callbackThread?.Join();
+        }
+
+        /// <summary>
+        ///     This function gets the current state of the thread that is dealing with the driver.
+        /// </summary>
+        public ThreadState? DriverThreadStatus()
+        {
+            return _callbackThread?.ThreadState;
+        }
+
         public Input()
         {
             _context = IntPtr.Zero;
