@@ -28,7 +28,7 @@ namespace Interceptor
         /// </summary>
         public MouseFilterMode MouseFilterMode { get; set; }
 
-        public bool IsLoaded { get; set; }
+        public bool IsLoaded { get; private set; }
 
         /// <summary>
         ///     Gets or sets the delay in milliseconds after each key stroke down and up. Pressing a key requires both a key stroke
