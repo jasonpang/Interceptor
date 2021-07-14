@@ -17,6 +17,7 @@ namespace Interceptor
         private IntPtr _context;
         private Thread _callbackThread;
         private int _mouseId = 11; // Default to 11 based on #10
+        private int _keyBoardId = 2;
 
         /// <summary>
         ///     Determines whether the driver traps no keyboard events, all events, or a range of events in-between (down only, up
@@ -51,8 +52,6 @@ namespace Interceptor
         public event EventHandler<KeyPressedEventArgs> OnKeyPressed;
         public event EventHandler<MousePressedEventArgs> OnMousePressed;
 
-        private int _deviceId; /* Very important; which device the driver sends events to */
-        
 
         public Input()
         {
@@ -118,13 +117,13 @@ namespace Interceptor
             InterceptionDriver.SetFilter(_context, InterceptionDriver.IsMouse, (ushort)MouseFilterMode);
 
             var stroke = new Stroke();
-
-            while (InterceptionDriver.Receive(_context, _deviceId = InterceptionDriver.Wait(_context), ref stroke, 1) >
+            int deviceId;
+            while (InterceptionDriver.Receive(_context, deviceId = InterceptionDriver.Wait(_context), ref stroke, 1) >
                    0 && IsLoaded)
             {
-                if (InterceptionDriver.IsMouse(_deviceId) > 0)
+                if (InterceptionDriver.IsMouse(deviceId) > 0)
                 {
-                    _mouseId = _deviceId;
+                    _mouseId = deviceId;
                     if (OnMousePressed != null)
                     {
                         var args = new MousePressedEventArgs
@@ -144,18 +143,22 @@ namespace Interceptor
                     }
                 }
 
-                if (InterceptionDriver.IsKeyboard(_deviceId) > 0)
+                if (InterceptionDriver.IsKeyboard(deviceId) > 0)
+                {
+                    _keyBoardId = deviceId;
+                    Console.WriteLine(_keyBoardId);
                     if (OnKeyPressed != null)
                     {
-                        var args = new KeyPressedEventArgs { Key = stroke.Key.Code, State = stroke.Key.State };
+                        var args = new KeyPressedEventArgs {Key = stroke.Key.Code, State = stroke.Key.State};
                         OnKeyPressed(this, args);
 
                         if (args.Handled) continue;
                         stroke.Key.Code = args.Key;
                         stroke.Key.State = args.State;
                     }
+                }
 
-                InterceptionDriver.Send(_context, _deviceId, ref stroke, 1);
+                InterceptionDriver.Send(_context, deviceId, ref stroke, 1);
             }
 #if DEBUG
             Console.WriteLine("DEBUG: DriverCallBack has left the loop.");
@@ -178,7 +181,7 @@ namespace Interceptor
 
             stroke.Key = keyStroke;
 
-            InterceptionDriver.Send(_context, _deviceId, ref stroke, 1);
+            InterceptionDriver.Send(_context, _keyBoardId, ref stroke, 1);
 
             if (KeyPressDelay > 0)
                 Thread.Sleep(KeyPressDelay);

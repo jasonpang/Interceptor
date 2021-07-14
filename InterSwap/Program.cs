@@ -19,6 +19,28 @@ namespace InterSwap
         }
         static void Main(string[] args)
         {
+            Input input = new Input();
+            input.KeyboardFilterMode = KeyboardFilterMode.None;
+            input.MouseFilterMode = MouseFilterMode.None;
+            input.Load();
+
+            Thread.Sleep(2000);
+
+            input.SendLeftClick();
+
+            Thread.Sleep(2000);
+
+            input.KeyPressDelay = 10;
+            Console.WriteLine("C Down");
+            input.SendKey(Interceptor.Keys.C, KeyState.Down);
+            Thread.Sleep(2000);
+            Console.WriteLine("C Up");
+            input.SendKey(Interceptor.Keys.C, KeyState.Up);
+            Console.WriteLine("A");
+            input.SendKeys(Interceptor.Keys.A);
+
+            input.Unload();
+            return;
             // Setting up fail safe thread.
             var source = new CancellationTokenSource();
             var failSafety = new Thread(FailSafe);
@@ -30,7 +52,7 @@ namespace InterSwap
             // cause a system soft-lock.
             failSafety.Start(source.Token);
             // Tell the driver to capture all input.
-            var input = new Input
+            var input2 = new Input
             {
                 MouseFilterMode = MouseFilterMode.All,
                 KeyboardFilterMode = KeyboardFilterMode.All
