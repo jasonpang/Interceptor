@@ -52,23 +52,7 @@ namespace Interceptor
         public event EventHandler<MousePressedEventArgs> OnMousePressed;
 
         private int _deviceId; /* Very important; which device the driver sends events to */
-
-        /// <summary>
-        ///     This function calls the Thread.Join() function for the thread currently dealing
-        ///     with the driver.
-        /// </summary>
-        public void DriverThreadJoin()
-        {
-            _callbackThread?.Join();
-        }
-
-        /// <summary>
-        ///     This function gets the current state of the thread that is dealing with the driver.
-        /// </summary>
-        public ThreadState? DriverThreadStatus()
-        {
-            return _callbackThread?.ThreadState;
-        }
+        
 
         public Input()
         {
@@ -122,6 +106,9 @@ namespace Interceptor
             if (_context == IntPtr.Zero) return;
 
             IsLoaded = false;
+            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsKeyboard, (ushort) KeyboardFilterMode.All);
+            InterceptionDriver.SetFilter(_context, InterceptionDriver.IsMouse, (ushort) MouseFilterMode.All);
+            _callbackThread.Join();
             InterceptionDriver.DestroyContext(_context);
         }
 
@@ -133,7 +120,7 @@ namespace Interceptor
             var stroke = new Stroke();
 
             while (InterceptionDriver.Receive(_context, _deviceId = InterceptionDriver.Wait(_context), ref stroke, 1) >
-                   0)
+                   0 && IsLoaded)
             {
                 if (InterceptionDriver.IsMouse(_deviceId) > 0)
                 {
@@ -170,7 +157,9 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, _deviceId, ref stroke, 1);
             }
-
+#if DEBUG
+            Console.WriteLine("DEBUG: DriverCallBack has left the loop.");
+#endif
             if (!IsLoaded)
                 return;
             Unload();
@@ -446,7 +435,7 @@ namespace Interceptor
                 stroke.Mouse = mouseStroke;
                 stroke.Mouse.Flags = MouseFlags.MoveRelative;
 
-                InterceptionDriver.Send(_context, 12, ref stroke, 1);
+                InterceptionDriver.Send(_context, _mouseId, ref stroke, 1);
             }
 #if WINDOWSFORM
 #warning Use of none Interception Driver enable!
@@ -482,7 +471,7 @@ namespace Interceptor
                 stroke.Mouse = mouseStroke;
                 stroke.Mouse.Flags = MouseFlags.MoveAbsolute;
 
-                InterceptionDriver.Send(_context, 12, ref stroke, 1);
+                InterceptionDriver.Send(_context, _mouseId, ref stroke, 1);
             }
 #if WINDOWSFORM
 #warning Use of none Interception Driver enable!
