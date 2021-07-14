@@ -36,6 +36,7 @@ namespace Interceptor
     [Flags]
     public enum MouseState : ushort
     {
+        Moving = 0x00,
         LeftDown = 0x01,
         LeftUp = 0x02,
         RightDown = 0x04,
@@ -146,7 +147,7 @@ namespace Interceptor
 
         [DllImport("interception.dll", EntryPoint = "interception_wait_with_timeout",
             CallingConvention = CallingConvention.Cdecl)]
-        public static extern int WaitWithTimeout(IntPtr context, long milliseconds);
+        public static extern int WaitWithTimeout(IntPtr context, ulong milliseconds);
 
         [DllImport("interception.dll", EntryPoint = "interception_send", CallingConvention = CallingConvention.Cdecl)]
         public static extern int Send(IntPtr context, int device, ref Stroke stroke, uint numStrokes);

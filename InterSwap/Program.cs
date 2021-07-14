@@ -50,6 +50,7 @@ namespace InterSwap
             // Creating Reverse Events.
             void Handler(object sender, MousePressedEventArgs eventArgs)
             {
+                Console.WriteLine(eventArgs.State);
                 switch (eventArgs.State)
                 {
                     case MouseState.LeftDown:
