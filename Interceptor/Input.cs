@@ -1,10 +1,12 @@
-﻿using System;
-// ReSharper disable once RedundantUsingDirective
+﻿//#define WINDOWSFORM //Uncomment to enable the use of Windows form functions. (Does not work on Console apps).
+using System;
+#if WINDOWSFORM
 using System.Drawing;
+using System.Windows.Forms;
+#endif
 using System.Linq;
 using System.Threading;
-// ReSharper disable once RedundantUsingDirective
-using System.Windows.Forms;
+
 
 // ReSharper disable UnusedMember.Global
 
@@ -424,9 +426,15 @@ namespace Interceptor
         ///     vectors. An alternate version uses the standard Win32 API to get the current cursor's position, calculates the
         ///     desired destination's offset, and uses the Win32 API to set the cursor to the new position.
         /// </summary>
+#if WINDOWSFORM
+#warning Use of none Interception Driver enable!
         public void MoveMouseBy(int deltaX, int deltaY, bool useDriver = true)
         {
             if (useDriver)
+#else
+        public void MoveMouseBy(int deltaX, int deltaY)
+        {
+#endif
             {
                 var stroke = new Stroke();
                 var mouseStroke = new MouseStroke
@@ -440,8 +448,8 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, 12, ref stroke, 1);
             }
-            //Uncomment if you're using Windows Form. 
-            /*
+#if WINDOWSFORM
+#warning Use of none Interception Driver enable!
             else
             {
                 var currentPos = Cursor.Position;
@@ -450,16 +458,22 @@ namespace Interceptor
                         currentPos.Y -
                         deltaY); // Coordinate system for y: 0 begins at top, and bottom of screen has the largest number
             }
-            */
+#endif
         }
 
         /// <summary>
         ///     Warning: This function, if using the driver, does not function reliably and often moves the mouse in unpredictable
         ///     vectors. An alternate version uses the standard Win32 API to set the cursor's position and does not use the driver.
         /// </summary>
+#if WINDOWSFORM
+#warning Use of none Interception Driver enable!
         public void MoveMouseTo(int x, int y, bool useDriver = true)
         {
             if (useDriver)
+#else
+        public void MoveMouseTo(int x, int y)
+        {
+#endif
             {
                 var stroke = new Stroke();
                 var mouseStroke = new MouseStroke { X = x, Y = y };
@@ -470,13 +484,13 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, 12, ref stroke, 1);
             }
-            //Uncomment if you're using Windows Form. 
-            /*
-                        else
-                        {
-                            Cursor.Position = new Point(x, y);
-                        }
-            */
+#if WINDOWSFORM
+#warning Use of none Interception Driver enable!
+            else
+            {
+                Cursor.Position = new Point(x, y);
+            }
+#endif
         }
     }
 }
