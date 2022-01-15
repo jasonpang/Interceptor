@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ReSharper disable UnusedMember.Global
 
 namespace Interceptor
 {
     /// <summary>
-    /// A list of scancodes.
+    ///     A list of scan-codes.
     /// </summary>
-    /// <remarks>Scancodes change according to keyboard layout...so this may be inaccurate.</remarks>
+    /// <remarks>Scan-codes change according to keyboard layout...so this may be inaccurate.</remarks>
     public enum Keys : ushort
     {
         Escape = 1,
@@ -110,6 +107,6 @@ namespace Interceptor
         NumpadDelete = 83,
         NumpadEnter = 28,
         NumpadPlus = 78,
-        NumpadMinus = 74,
+        NumpadMinus = 74
     }
 }
