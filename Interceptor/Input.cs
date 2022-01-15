@@ -146,7 +146,6 @@ namespace Interceptor
                 if (InterceptionDriver.IsKeyboard(deviceId) > 0)
                 {
                     _keyBoardId = deviceId;
-                    Console.WriteLine(_keyBoardId);
                     if (OnKeyPressed != null)
                     {
                         var args = new KeyPressedEventArgs {Key = stroke.Key.Code, State = stroke.Key.State};
@@ -160,9 +159,6 @@ namespace Interceptor
 
                 InterceptionDriver.Send(_context, deviceId, ref stroke, 1);
             }
-#if DEBUG
-            Console.WriteLine("DEBUG: DriverCallBack has left the loop.");
-#endif
             if (!IsLoaded)
                 return;
             Unload();
